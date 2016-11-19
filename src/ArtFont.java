@@ -41,7 +41,7 @@ public class ArtFont extends JFrame {
 		boldStyle = 0;
 		italicStyle = 0;
 		underlineStyle = 0;
-		fontSizeStyle = 10;
+		fontSizeStyle = 25;
 		fontNameStyle = "楷体";
 		font = new Font(fontNameStyle, boldStyle + italicStyle, fontSizeStyle);
 		northPanel = getNorthPanel();
@@ -57,6 +57,7 @@ public class ArtFont extends JFrame {
 		//将southPanel添加到窗体的南部
 		container.add(southPanel,BorderLayout.SOUTH);
 		setSize(500, 300);
+		setLocationRelativeTo(null);
 		//将窗体位于屏幕的中央
 		setVisible(true);	
 
@@ -83,24 +84,24 @@ public class ArtFont extends JFrame {
 						}else{
 							//txtArea.setFont(new Font(txtArea.getFont().getFontName(), Font.BOLD, 20));
 							boldStyle = Font.BOLD;
-							italicStyle = 0;
+							italicStyle = Font.PLAIN;
 						}
 					}else{
 						//加粗未选中倾斜选中
 						if (italicBx.isSelected()) {
 							//txtArea.setFont(new Font(txtArea.getFont().getFontName(), Font.ITALIC, 20));
-
-							boldStyle = 0;
+							boldStyle = Font.PLAIN;
 							italicStyle = Font.ITALIC;
 						}
 						else{
 							//加粗和倾斜都没选中
 							//txtArea.setFont(new Font(txtArea.getFont().getFontName(), 5, 20));
-							boldStyle = 0;
-							italicStyle = 0;
+							boldStyle = Font.PLAIN;
+							italicStyle = Font.PLAIN;
 						}
-					}				
-					txtArea.setFont(new Font(txtArea.getFont().getFontName(), boldStyle + italicStyle, fontSizeStyle));
+					}	
+					font = new Font(fontNameStyle, boldStyle + italicStyle, fontSizeStyle);
+					txtArea.setFont(font);
 				}
 			}
 		});
@@ -120,7 +121,7 @@ public class ArtFont extends JFrame {
 							italicStyle = Font.ITALIC;
 						}else{
 							//txtArea.setFont(new Font(txtArea.getFont().getFontName(), Font.ITALIC, 20));
-							boldStyle = 0;
+							boldStyle = Font.PLAIN;
 							italicStyle = Font.ITALIC;
 						}
 					}else{
@@ -129,17 +130,17 @@ public class ArtFont extends JFrame {
 						if (boldBx.isSelected()) {
 							//txtArea.setFont(new Font(txtArea.getFont().getFontName(), Font.BOLD, 20));
 							boldStyle = Font.BOLD;
-							italicStyle = 0;
+							italicStyle = Font.PLAIN;
 						}else{
 							//txtArea.setFont(new Font(txtArea.getFont().getFontName(), Font.ITALIC, 20));
-							boldStyle = 0;
-							italicStyle = 0;
+							boldStyle = Font.PLAIN;
+							italicStyle = Font.PLAIN;
 						}
 					}
-					txtArea.setFont(new Font(txtArea.getFont().getFontName(), boldStyle + italicStyle, fontSizeStyle));
+					font = new Font(fontNameStyle, boldStyle + italicStyle, fontSizeStyle);
+					txtArea.setFont(font);
 				}
 			}
-
 		});
 
 		inputText = new JTextField(15);
@@ -180,10 +181,12 @@ public class ArtFont extends JFrame {
 	//文本区域
 	private JPanel getCenterPanel() {
 		JPanel panel = new JPanel();
+		panel.setLayout(new BorderLayout());
 		txtArea = new JTextArea(0,0);
+		panel.add(new JScrollPane(txtArea),BorderLayout.CENTER);
 		txtArea.setEditable(false);
-		txtArea.setBackground(panel.getBackground());//与背景同色
-		panel.add(txtArea);
+		txtArea.setBackground(getContentPane().getBackground());//与背景同色
+		//panel.add(txtArea,BorderLayout.CENTER);
 		return panel;
 	}
 	private JPanel getSouthPanel() {
@@ -239,6 +242,8 @@ public class ArtFont extends JFrame {
 		panel.add(windowStyle);
 		return panel;		
 	}
+	
+	
 	public static void main(String args[]) {
 		ArtFont artFont = new ArtFont();
 		artFont.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
