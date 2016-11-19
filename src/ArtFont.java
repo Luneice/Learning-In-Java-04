@@ -15,7 +15,6 @@ public class ArtFont extends JFrame {
 	JComboBox<String> fontType;//字体样式下拉框, 
 	JComboBox<String> fontSize;//字体大小下拉框
 	JComboBox<String> windowStyle;//窗体样式下拉框
-
 	JCheckBox boldBx;// 粗体按钮
 	JCheckBox italicBx;// 斜体按钮
 	JButton colorBtn;// 颜色按钮；
@@ -72,65 +71,75 @@ public class ArtFont extends JFrame {
 			//以下代码过于啰嗦，有待优化
 			public void actionPerformed(ActionEvent e) {
 				//加粗复选框被选中
-				if (boldBx.isSelected()) {
-					//加粗倾斜被选中
-					if (italicBx.isSelected()) {
-						//txtArea.setFont(new Font(txtArea.getFont().getFontName(), Font.BOLD + Font.ITALIC, 20));
-						boldStyle = Font.BOLD;
-						italicStyle = Font.ITALIC;
-					}else{
-						//txtArea.setFont(new Font(txtArea.getFont().getFontName(), Font.BOLD, 20));
-						boldStyle = Font.BOLD;
-						italicStyle = 0;
-					}
-				}else{
-					//加粗未选中倾斜选中
-					if (italicBx.isSelected()) {
-						//txtArea.setFont(new Font(txtArea.getFont().getFontName(), Font.ITALIC, 20));
 
-						boldStyle = 0;
-						italicStyle = Font.ITALIC;
-					}
-					else{
-						//加粗和倾斜都没选中
-						//txtArea.setFont(new Font(txtArea.getFont().getFontName(), 5, 20));
-						boldStyle = 0;
-						italicStyle = 0;
-					}
-				}				
-				txtArea.setFont(new Font(txtArea.getFont().getFontName(), boldStyle + italicStyle, fontSizeStyle));
+				if (e.getSource() == boldBx) {
+
+					if (boldBx.isSelected()) {
+						//加粗倾斜被选中
+						if (italicBx.isSelected()) {
+							//txtArea.setFont(new Font(txtArea.getFont().getFontName(), Font.BOLD + Font.ITALIC, 20));
+							boldStyle = Font.BOLD;
+							italicStyle = Font.ITALIC;
+						}else{
+							//txtArea.setFont(new Font(txtArea.getFont().getFontName(), Font.BOLD, 20));
+							boldStyle = Font.BOLD;
+							italicStyle = 0;
+						}
+					}else{
+						//加粗未选中倾斜选中
+						if (italicBx.isSelected()) {
+							//txtArea.setFont(new Font(txtArea.getFont().getFontName(), Font.ITALIC, 20));
+
+							boldStyle = 0;
+							italicStyle = Font.ITALIC;
+						}
+						else{
+							//加粗和倾斜都没选中
+							//txtArea.setFont(new Font(txtArea.getFont().getFontName(), 5, 20));
+							boldStyle = 0;
+							italicStyle = 0;
+						}
+					}				
+					txtArea.setFont(new Font(txtArea.getFont().getFontName(), boldStyle + italicStyle, fontSizeStyle));
+				}
 			}
 		});
 		italicBx.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//如果斜体复选框被选中则
-				if (italicBx.isSelected()) {
-					//txtArea.setFont(new Font(txtArea.getFont().getFontName(), Font.ITALIC, 20));
-					//倾斜和粗体都选中
-					if (boldBx.isSelected()) {
-						//txtArea.setFont(new Font(txtArea.getFont().getFontName(), Font.BOLD + Font.ITALIC, 20));
-						boldStyle = Font.BOLD;
-						italicStyle = Font.ITALIC;
-					}else{
+
+				if (e.getSource() == italicBx) {
+
+
+					if (italicBx.isSelected()) {
 						//txtArea.setFont(new Font(txtArea.getFont().getFontName(), Font.ITALIC, 20));
-						boldStyle = 0;
-						italicStyle = Font.ITALIC;
-					}
-				}else{
-					//如果斜体复选框的状态没被选中则(使用toString是可以的)
-					//txtArea.setFont(new Font(txtArea.getFont().toString(), 5, 20));
-					if (boldBx.isSelected()) {
-						//txtArea.setFont(new Font(txtArea.getFont().getFontName(), Font.BOLD, 20));
-						boldStyle = Font.BOLD;
-						italicStyle = 0;
+						//倾斜和粗体都选中
+						if (boldBx.isSelected()) {
+							//txtArea.setFont(new Font(txtArea.getFont().getFontName(), Font.BOLD + Font.ITALIC, 20));
+							boldStyle = Font.BOLD;
+							italicStyle = Font.ITALIC;
+						}else{
+							//txtArea.setFont(new Font(txtArea.getFont().getFontName(), Font.ITALIC, 20));
+							boldStyle = 0;
+							italicStyle = Font.ITALIC;
+						}
 					}else{
-						//txtArea.setFont(new Font(txtArea.getFont().getFontName(), Font.ITALIC, 20));
-						boldStyle = 0;
-						italicStyle = 0;
+						//如果斜体复选框的状态没被选中则(使用toString是可以的)
+						//txtArea.setFont(new Font(txtArea.getFont().toString(), 5, 20));
+						if (boldBx.isSelected()) {
+							//txtArea.setFont(new Font(txtArea.getFont().getFontName(), Font.BOLD, 20));
+							boldStyle = Font.BOLD;
+							italicStyle = 0;
+						}else{
+							//txtArea.setFont(new Font(txtArea.getFont().getFontName(), Font.ITALIC, 20));
+							boldStyle = 0;
+							italicStyle = 0;
+						}
 					}
+					txtArea.setFont(new Font(txtArea.getFont().getFontName(), boldStyle + italicStyle, fontSizeStyle));
 				}
-				txtArea.setFont(new Font(txtArea.getFont().getFontName(), boldStyle + italicStyle, fontSizeStyle));
 			}
+
 		});
 
 		inputText = new JTextField(15);
@@ -138,7 +147,8 @@ public class ArtFont extends JFrame {
 		colorBtn = new JButton("颜色");
 		colorBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				txtArea.setForeground(colorStyle);
+				if (e.getSource() == colorBtn)
+					txtArea.setForeground(colorStyle);
 			}
 		});
 		panel.add(label);
@@ -188,16 +198,40 @@ public class ArtFont extends JFrame {
 		}
 		fontSize = new JComboBox<>(fontSizes);
 		windowStyle = new JComboBox<>(style);
-		
+
 		fontType.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
-				txtArea.setFont(new Font(fontType.getSelectedItem().toString(), boldStyle + italicStyle, fontSizeStyle));
+				if (e.getSource() == fontType)
+					txtArea.setFont(new Font(fontType.getSelectedItem().toString(), boldStyle + italicStyle, fontSizeStyle));
 			}
 		});
 		fontSize.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
-				fontSizeStyle = Integer.parseInt(fontSize.getSelectedItem().toString());
-				txtArea.setFont(new Font(txtArea.getFont().getFontName(), boldStyle + italicStyle, fontSizeStyle));
+				if (e.getSource() == fontSize){
+					fontSizeStyle = Integer.parseInt(fontSize.getSelectedItem().toString());
+					txtArea.setFont(new Font(txtArea.getFont().getFontName(), boldStyle + italicStyle, fontSizeStyle));
+				}
+			}
+		});
+
+		windowStyle.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getSource() == windowStyle){
+					String s = e.getItem().toString();
+					String className = "";
+					if (s.equals("Windows显示效果"))
+						className = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
+					else if (s.equals("Unix显示效果"))
+						className = "com.sun.java.swing.plaf.motif.MotifLookAndFeel";
+					else if (s.equals("默认显示效果"))
+						className = UIManager.getCrossPlatformLookAndFeelClassName();
+					try {
+						UIManager.setLookAndFeel(className);
+						SwingUtilities.updateComponentTreeUI(getContentPane());
+					} catch (Exception de) {
+						System.out.println("Exception happened!");
+					}
+				}
 			}
 		});
 		panel.add(fontType);
